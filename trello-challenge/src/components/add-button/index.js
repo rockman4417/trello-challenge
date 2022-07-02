@@ -15,13 +15,15 @@ const reducer = (state, action) => {
     }
 }
 
+const ACTIONS = {TOGGLE: "toggle", TITLE: "title", ERROR: "error"}
+
 export default function AddButton({type, addTask}) {
     const [state, dispatch] = useReducer(reducer, {isAdding: false, title: "", error: ""});
 
     const onSave = (e) => {
         e.preventDefault();
         if(!state.title) {
-            dispatch({type: "error", payload: "TITLE CANNOT BE BLANK"})
+            dispatch({type: ACTIONS.ERROR, payload: "TITLE CANNOT BE BLANK"})
             return
         }
         addTask(state.title, type);
@@ -29,14 +31,14 @@ export default function AddButton({type, addTask}) {
     }
 
     const clearState = () => {
-        dispatch({type: 'toggle'});
-        dispatch({type: "error", payload: ""});
-        dispatch({type: "title", payload: ""});
+        dispatch({type: ACTIONS.TOGGLE});
+        dispatch({type: ACTIONS.ERROR, payload: ""});
+        dispatch({type: ACTIONS.TITLE, payload: ""});
     }
 
     if(!state.isAdding) {
         return (
-            <Button onClick={() => dispatch({type: 'toggle'})}>Add Task</Button>
+            <Button onClick={() => dispatch({type: ACTIONS.TOGGLE})}>Add Task</Button>
         )
     }
     else {
@@ -49,7 +51,7 @@ export default function AddButton({type, addTask}) {
                   label="New Task"
                   placeholder="Do Something"
                   helperText={state.error}
-                  onChange={(e) => {dispatch({type: 'title', payload: e.target.value})}}
+                  onChange={(e) => {dispatch({type: ACTIONS.TITLE, payload: e.target.value})}}
                 />
                 <div>
                     <Button type="submit" onClick={onSave}>SAVE</Button>
