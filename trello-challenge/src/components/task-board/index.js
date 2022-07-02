@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import TaskCard from '../task-card';
 import AddButton from '../add-button';
 const columns = ["backlog", "todo", "progress", "complete"];
@@ -28,10 +28,6 @@ const defaultTasks = [
 export default function TaskBoard() {
     const [tasks, setTasks] = useState(defaultTasks);
 
-    useEffect(() => {
-        console.log("tasks", tasks)
-    },[tasks])
-
     const addTask = (title, type) => {
         setTasks((prevTasks) => {
             return [...prevTasks, {id: prevTasks.length + 1, title: title, type: type}]
@@ -58,9 +54,9 @@ export default function TaskBoard() {
             <div key={idx} style={{width: 300, height: 500, border: "1px solid lightgray", borderRadius: 10, display: "flex", flexDirection: "column", alignItems: "center"}}>
                 <p style={{fontWeight: "bold"}}>{type.toUpperCase()}</p>
                 <div style={{width: "100%", height: "80%", display: "flex", flexDirection: "column", alignItems: "center"}}>
-                    {matchingTasks.map((task, idx) => {
+                    {matchingTasks.map((task) => {
                         return(
-                            <TaskCard key={task.id} task={task} taskIdx={idx} moveTask={moveTask} columns={columns}/>
+                            <TaskCard key={task.id} task={task} moveTask={moveTask} columns={columns}/>
                         )
                     })}
                 </div>
