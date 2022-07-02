@@ -66,7 +66,7 @@ export default function TaskBoard() {
     }
 
     return (
-        <>
+        <div style={{display: "flex", justifyContent: "center"}}>
             <div style={{display: "flex", width: "90vw", height: "80vh", justifyContent: "space-around", alignItems: "center"}}>
                 {columns.map((col, idx) => {
                     return (
@@ -74,6 +74,6 @@ export default function TaskBoard() {
                     )
                 })}
             </div>
-        </>
+        </div>
     )
 }
