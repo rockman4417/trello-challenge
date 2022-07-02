@@ -14,12 +14,8 @@ const reducer = (state, action) => {
 export default function AddButton({type, addTask}) {
     const [state, dispatch] = useReducer(reducer, {isAdding: false, title: "", error: ""});
 
-    useEffect(() => {
-        console.log(state.title)
-    },[state.title])
-
-    const onSave = () => {
-        console.log("saving!")
+    const onSave = (e) => {
+        e.preventDefault();
         dispatch({type: 'toggle'})
         addTask(state.title, type)
     }
@@ -31,19 +27,20 @@ export default function AddButton({type, addTask}) {
     }
     else {
         return (
-            <div>
+            <form>
                 <TextField
                   error={state.error}
+                  autoFocus={true}
                   id={state.error ? "outline-error" : "outlined-basic"}
                   label="New Task"
                   placeholder="Do Something"
                   onChange={(e) => {dispatch({type: 'handleChangeText', payload: e.target.value})}}
                 />
                 <div>
-                    <Button onClick={onSave}>SAVE</Button>
+                    <Button type="submit" onClick={onSave}>SAVE</Button>
                     <Button onClick={() => dispatch({type: 'toggle'})}>X</Button>
                 </div>
-            </div>
+            </form>
         )
     }
 }
